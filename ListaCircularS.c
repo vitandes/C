@@ -51,12 +51,37 @@ void add(list* ll, int valor) {
     ll->tamano++;
 }
 
+void removed(list* ll, unsigned int indice){
+     if (ll->tamano && indice<ll->tamano){
+         Nodo* aux;
+         if (indice == 0){
+             aux = ll->head;
+             ll->head = ll->head->sig;
+             free(aux);
+         } else {
+             Nodo* exploradorLista = ll->head;
+             int i = 0;
+             while (i++ < indice-1)
+                 exploradorLista = exploradorLista->sig;
+             aux = exploradorLista->sig;
+             if (indice == ll->tamano-1){
+                 exploradorLista->sig = NULL;
+                 exploradorLista->sig = ll->head;
+             } else exploradorLista->sig = exploradorLista->sig->sig;
+            free(aux);
+         }
+         
+         ll->tamano--;
+     }
+ }
+
 int main() {
     list List = createList();
     add(&List, 5);
     add(&List, 10);
     add(&List, 15);
 
+    removed(&List, 0);
     read(&List);
 
     return 0;
