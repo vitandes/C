@@ -80,6 +80,29 @@ void update(listaLigada* LL, Nodo* nodo, unsigned int indice){
     }
 }
 
+void removed(listaLigada* ll, unsigned int indice){
+     if (ll->tamano && indice<ll->tamano){
+         Nodo* aux;
+         if (indice == 0){
+             aux = ll->primerItem;
+             ll->primerItem = ll->primerItem->sig;
+             free(aux);
+         } else {
+             Nodo* exploradorLista = ll->primerItem;
+             int i = 0;
+             while (i++ < indice-1)
+                 exploradorLista = exploradorLista->sig;
+             aux = exploradorLista->sig;
+             if (indice == ll->tamano-1){
+                 exploradorLista->sig = NULL;
+                 ll->ultimoItem = exploradorLista;
+             } else exploradorLista->sig = exploradorLista->sig->sig;
+         }
+         free(aux);
+         ll->tamano--;
+     }
+ }
+
 int main() {
     listaLigada* List = getList();
     Nodo* a = getNode(5);
